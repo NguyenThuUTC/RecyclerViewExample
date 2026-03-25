@@ -42,7 +42,7 @@ class MovieFragment : Fragment() {
         }
 
         movieViewModel.movies.observe(viewLifecycleOwner) { movies ->
-            movieAdapter?.submitList(movies)
+            movieAdapter?.submitList(movies ?: listOf())
         }
     }
 }

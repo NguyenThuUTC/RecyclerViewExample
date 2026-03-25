@@ -12,8 +12,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MovieViewModel : ViewModel() {
-    private val _movies = MutableLiveData<List<MovieUIModel>>()
-    val movies: LiveData<List<MovieUIModel>> = _movies
+    private val _movies = MutableLiveData<List<MovieUIModel>?>()
+    val movies: LiveData<List<MovieUIModel>?> = _movies
 
     val service = ServiceProvider.api
 

@@ -8,6 +8,6 @@ fun Movie.toUi(): MovieUIModel {
         id = id,
         title = title,
         overview = overview,
-        posterPath = "https://image.tmdb.org/$poster_path"
+        posterPath = "https://image.tmdb.org/t/p/w500$poster_path"
     )
 }
