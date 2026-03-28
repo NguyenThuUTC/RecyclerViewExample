@@ -1,6 +1,6 @@
 package com.example.recyclerviewex.ui
 
-data class MovieUIModel(
+data class MovieItem(
     val genreIds: List<Int>? = null,
     val id: Int? = null,
     val originalTitle: String? = null,
@@ -11,3 +11,9 @@ data class MovieUIModel(
     val voteAverage: Double? = null,
     val voteCount: Int? = null
 )
+
+//feature/move
+sealed class MovieUIModel {
+    data class Feature(val movie: MovieItem): MovieUIModel()
+    data class Movie(val movie: MovieItem): MovieUIModel()
+}

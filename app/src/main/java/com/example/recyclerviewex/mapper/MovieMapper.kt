@@ -1,10 +1,10 @@
 package com.example.recyclerviewex.mapper
 
 import com.example.recyclerviewex.data.model.Movie
-import com.example.recyclerviewex.ui.MovieUIModel
+import com.example.recyclerviewex.ui.MovieItem
 
-fun Movie.toUi(): MovieUIModel {
-    return MovieUIModel(
+fun Movie.toUi(): MovieItem {
+    return MovieItem(
         id = id,
         title = title,
         overview = overview,

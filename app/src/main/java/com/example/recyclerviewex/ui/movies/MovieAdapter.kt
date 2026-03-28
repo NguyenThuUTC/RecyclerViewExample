@@ -5,40 +5,70 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.example.recyclerviewex.databinding.ItemFeaturedBinding
 import com.example.recyclerviewex.databinding.ItemMovieBinding
+import com.example.recyclerviewex.ui.MovieItem
 import com.example.recyclerviewex.ui.MovieUIModel
 
-class MovieAdapter : ListAdapter<MovieUIModel, MovieAdapter.ItemViewHolder>(DiffCallback()) {
+class MovieAdapter(val onMovieClick: (MovieItem) -> Unit) : ListAdapter<MovieUIModel, RecyclerView.ViewHolder>(DiffCallback()) {
 
-    class ItemViewHolder(
-        val binding: ItemMovieBinding
-    ) : RecyclerView.ViewHolder(binding.root)
+    //Featured -> movie đầu trong list
+    //Movies
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val binding = ItemMovieBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return ItemViewHolder(binding)
+    companion object {
+        const val  TYPE_FEATURED = 0
+        const val TYPE_MOVIE = 1
     }
 
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+    override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
+        return when(item) {
+            is MovieUIModel.Movie -> TYPE_MOVIE
+            is MovieUIModel.Feature -> TYPE_FEATURED
+        }
+    }
 
-        Glide.with(holder.itemView)
-            .load(item.posterPath)
-            .into(holder.binding.imgPoster)
-        holder.binding.txtTitle.text = item.title
-        holder.binding.txtOverview.text = item.overview
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        return when (viewType) {
+            TYPE_FEATURED -> {
+                val binding = ItemFeaturedBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                ItemFeatureViewHolder(binding, onMovieClick)
+            }
+            else -> {
+                val binding = ItemMovieBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                 ItemViewHolder(binding, onMovieClick)
+            }
+        }
+
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when(val item = getItem(position)) {
+            is MovieUIModel.Feature -> (holder as ItemFeatureViewHolder).binData(item.movie)
+            is MovieUIModel.Movie -> (holder as ItemViewHolder).bindData(item.movie)
+        }
+
     }
 
     // DiffUtil
     class DiffCallback : DiffUtil.ItemCallback<MovieUIModel>() {
 
         override fun areItemsTheSame(oldItem: MovieUIModel, newItem: MovieUIModel): Boolean {
-            return oldItem.id == newItem.id
+            return when {
+                oldItem is MovieUIModel.Feature && newItem is MovieUIModel.Feature -> oldItem.movie.id == newItem.movie.id
+                oldItem is MovieUIModel.Movie && newItem is MovieUIModel.Movie -> oldItem.movie.id == newItem.movie.id
+                else -> false
+            }
+
         }
 
         override fun areContentsTheSame(oldItem: MovieUIModel, newItem: MovieUIModel): Boolean {
