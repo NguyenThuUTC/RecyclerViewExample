@@ -1,18 +1,17 @@
 package com.example.recyclerviewex.ui.movies
 
-import android.graphics.Movie
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.recyclerviewex.R
 import com.example.recyclerviewex.databinding.FragmentMovieBinding
-import com.example.recyclerviewex.ui.MovieUIModel
 
 class MovieFragment : Fragment() {
 
@@ -69,7 +68,13 @@ class MovieFragment : Fragment() {
 
     private fun initViews() {
         movieAdapter = MovieAdapter(onMovieClick = { movie ->
-            Toast.makeText(this.requireContext(), "${movie.title}", Toast.LENGTH_LONG).show()
+            // Task 2.1: Navigate sang màn Movie detail với movie id
+            findNavController().navigate(
+                R.id.movieDetailFragment,
+                Bundle().apply {
+                    putInt("movieId", movie.id ?: -1)
+                }
+            )
         })
         binding?.run {
             rcvMovies.adapter = movieAdapter

@@ -3,7 +3,6 @@ package com.example.recyclerviewex.ui.movies
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.recyclerviewex.databinding.ItemMovieBinding
-import com.example.recyclerviewex.ui.MovieItem
 
 class ItemViewHolder(
     val binding: ItemMovieBinding,

@@ -2,4 +2,8 @@
     <string name="app_name">RecyclerView Ex</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cast">Cast</string>
+    <string name="top_cast">TOP CAST</string>
+    <string name="production_company">Production companies</string>
+    <string name="rate_format">%.1f/10</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.recyclerviewex.ui
+package com.example.recyclerviewex.ui.movies
 
 data class MovieItem(
     val genreIds: List<Int>? = null,

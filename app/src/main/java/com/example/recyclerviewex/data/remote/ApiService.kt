@@ -1,9 +1,11 @@
 package com.example.recyclerviewex.data.remote
 
-import com.example.recyclerviewex.data.model.Movie
+import com.example.recyclerviewex.data.model.MovieCreditsResponse
+import com.example.recyclerviewex.data.model.MovieDetailResponse
 import com.example.recyclerviewex.data.model.MovieResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -13,4 +15,21 @@ interface ApiService {
         @Query("api_key") apiKey: String,
         @Query("page") page: Int
     ): Response<MovieResponse>
+
+
+    /**
+     * Task 4: tạo api
+     */
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetail(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Response<MovieDetailResponse>
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getCredits(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Response<MovieCreditsResponse>
+
 }

@@ -1,5 +1,6 @@
 package com.example.recyclerviewex.data.model
 
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Serializer
 
@@ -12,7 +13,8 @@ data class Movie(
     val originalTitle: String? = null,
     val overview: String? = null,
     val popularity: Double? = null,
-    val poster_path: String? = null,
+    @SerializedName("poster_path")
+    val posterPath: String? = null,
     val releaseDate: String? = null,
     val title: String? = null,
     val video: Boolean? = null,

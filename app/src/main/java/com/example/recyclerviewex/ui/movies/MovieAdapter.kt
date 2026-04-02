@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerviewex.databinding.ItemFeaturedBinding
 import com.example.recyclerviewex.databinding.ItemMovieBinding
-import com.example.recyclerviewex.ui.MovieItem
-import com.example.recyclerviewex.ui.MovieUIModel
 
 class MovieAdapter(val onMovieClick: (MovieItem) -> Unit) : ListAdapter<MovieUIModel, RecyclerView.ViewHolder>(DiffCallback()) {
 

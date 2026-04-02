@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recyclerviewex.data.remote.ServiceProvider
 import com.example.recyclerviewex.mapper.toUi
-import com.example.recyclerviewex.ui.MovieUIModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
