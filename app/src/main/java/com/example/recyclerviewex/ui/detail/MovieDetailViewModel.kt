@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recyclerviewex.data.remote.ServiceProvider
+import com.example.recyclerviewex.data.repository.MovieRepository
 import com.example.recyclerviewex.mapper.mapToMovieDetailUiModel
+import com.example.recyclerviewex.mapper.toMovieEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -14,7 +16,7 @@ import kotlinx.coroutines.launch
 /**
  * Task 3.1: Tạo ViewModel [MovieDetailViewModel]
  */
-class MovieDetailViewModel : ViewModel() {
+class MovieDetailViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 
 
     /**
@@ -63,6 +65,11 @@ class MovieDetailViewModel : ViewModel() {
 
                 val movieData = movieResponse.takeIf { it.isSuccessful }?.body()
                 val creditsData = creditsResponse.takeIf { it.isSuccessful }?.body()
+
+
+                movieData?.let {
+                    movieRepository.insertMovie(it.toMovieEntity(System.currentTimeMillis()))
+                }
 
                 /**
                  * Task 6: Mapping dữ liệu cho UI [mapToMovieDetailUiModel]

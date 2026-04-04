@@ -1,11 +1,15 @@
 package com.example.recyclerviewex.mapper
 
+import com.example.recyclerviewex.data.local.entity.MovieEntity
 import com.example.recyclerviewex.data.model.Movie
 import com.example.recyclerviewex.data.model.MovieCreditsResponse
 import com.example.recyclerviewex.data.model.MovieDetailResponse
 import com.example.recyclerviewex.ui.detail.MovieDetailUiModel
 import com.example.recyclerviewex.ui.movies.MovieItem
+import kotlin.Int
 
+
+const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"
 fun Movie.toUi(): MovieItem {
     return MovieItem(
         id = id,
@@ -42,4 +46,15 @@ fun mapToMovieDetailUiModel(
     )
 }
 
-const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"
+fun MovieDetailResponse.toMovieEntity(viewedAt: Long?) = MovieEntity(
+    id = id ?: 0,
+    genreIds = this.genres?.mapNotNull { it.id }
+        ?.joinToString(","),
+    overview = overview,
+    posterPath = "$IMAGE_BASE_URL${posterPath}",
+    originalTitle = title,
+    voteAverage = voteAverage,
+    viewedAt = viewedAt
+)
+
+

@@ -58,6 +58,10 @@ class MovieFragment : Fragment() {
                 }
             }
         })
+
+        btnViewedHistory.setOnClickListener {
+
+        }
     }
 
     private fun observeData() {

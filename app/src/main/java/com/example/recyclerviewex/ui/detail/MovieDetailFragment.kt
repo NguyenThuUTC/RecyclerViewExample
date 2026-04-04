@@ -7,14 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.recyclerviewex.R
+import com.example.recyclerviewex.data.local.database.AppDatabaseProvider
 import com.example.recyclerviewex.data.model.Cast
 import com.example.recyclerviewex.data.model.Genre
+import com.example.recyclerviewex.data.repository.MovieRepository
 import com.example.recyclerviewex.databinding.FragmentMovieDetailBinding
 import com.example.recyclerviewex.databinding.ItemGenreBinding
+import com.example.recyclerviewex.ui.common.BaseCreateFactoryViewModel
 
 /**
  * Task 1:
@@ -25,7 +30,28 @@ import com.example.recyclerviewex.databinding.ItemGenreBinding
 class MovieDetailFragment : Fragment() {
 
     var binding: FragmentMovieDetailBinding? = null
-    val movieDetailViewModel: MovieDetailViewModel by viewModels()
+
+    val db by lazy {
+        AppDatabaseProvider.getInstance(requireContext().applicationContext)
+    }
+
+    private val repository by lazy {
+        MovieRepository(db.movieDao())
+    }
+
+    //    val viewModel: MovieDetailViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//                return MovieDetailViewModel(repository) as T
+//            }
+//        }
+//    }
+
+        val movieDetailViewModel: MovieDetailViewModel by viewModels {
+            BaseCreateFactoryViewModel {
+                MovieDetailViewModel(repository)
+            }
+    }
 
     var castAdapter: CastAdapter? = null
 
