@@ -1,8 +1,8 @@
 package com.example.recyclerviewex.data.remote
 
-import com.example.recyclerviewex.data.model.MovieCreditsResponse
-import com.example.recyclerviewex.data.model.MovieDetailResponse
-import com.example.recyclerviewex.data.model.MovieResponse
+import com.example.recyclerviewex.data.remote.model.MovieCreditsResponse
+import com.example.recyclerviewex.data.remote.model.MovieDetailResponse
+import com.example.recyclerviewex.data.remote.model.MovieResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

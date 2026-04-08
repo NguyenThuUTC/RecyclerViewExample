@@ -2,7 +2,7 @@ package com.example.recyclerviewex.ui.detail
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.recyclerviewex.data.model.Cast
+import com.example.recyclerviewex.data.remote.model.Cast
 import com.example.recyclerviewex.databinding.ItemCastBinding
 
 class CastViewHolder(

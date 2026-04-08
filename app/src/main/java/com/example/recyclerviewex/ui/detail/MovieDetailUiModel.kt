@@ -1,7 +1,7 @@
 package com.example.recyclerviewex.ui.detail
 
-import com.example.recyclerviewex.data.model.Cast
-import com.example.recyclerviewex.data.model.Genre
+import com.example.recyclerviewex.data.remote.model.Cast
+import com.example.recyclerviewex.data.remote.model.Genre
 
 data class MovieDetailUiModel(
     val id: String? = null,

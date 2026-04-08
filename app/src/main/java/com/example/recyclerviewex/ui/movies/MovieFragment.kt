@@ -60,7 +60,7 @@ class MovieFragment : Fragment() {
         })
 
         btnViewedHistory.setOnClickListener {
-
+            findNavController().navigate(R.id.historyFragment)
         }
     }
 

@@ -20,5 +20,9 @@
         android:name="com.example.recyclerviewex.ui.detail.MovieDetailFragment"
         android:label="fragment_movie_detail"
         tools:layout="@layout/fragment_movie_detail" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.recyclerviewex.ui.history.HistoryFragment"
+        android:label="HistoryFragment" />
 
 </navigation>

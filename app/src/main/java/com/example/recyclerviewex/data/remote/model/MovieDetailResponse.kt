@@ -1,4 +1,4 @@
-package com.example.recyclerviewex.data.model
+package com.example.recyclerviewex.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 

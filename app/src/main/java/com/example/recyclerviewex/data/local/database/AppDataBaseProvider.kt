@@ -13,7 +13,10 @@ object AppDatabaseProvider {
                 context.applicationContext,
                 AppDataBase::class.java,
                 "movie db"
-            ).build().also { INSTANCE = it }
+            )
+                .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_2_3)
+                .build().also { INSTANCE = it }
         }
     }
 }

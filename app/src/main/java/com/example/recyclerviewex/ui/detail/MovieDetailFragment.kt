@@ -7,15 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.recyclerviewex.R
 import com.example.recyclerviewex.data.local.database.AppDatabaseProvider
-import com.example.recyclerviewex.data.model.Cast
-import com.example.recyclerviewex.data.model.Genre
+import com.example.recyclerviewex.data.remote.model.Cast
+import com.example.recyclerviewex.data.remote.model.Genre
 import com.example.recyclerviewex.data.repository.MovieRepository
 import com.example.recyclerviewex.databinding.FragmentMovieDetailBinding
 import com.example.recyclerviewex.databinding.ItemGenreBinding
@@ -47,10 +45,10 @@ class MovieDetailFragment : Fragment() {
 //        }
 //    }
 
-        val movieDetailViewModel: MovieDetailViewModel by viewModels {
-            BaseCreateFactoryViewModel {
-                MovieDetailViewModel(repository)
-            }
+    val movieDetailViewModel: MovieDetailViewModel by viewModels {
+        BaseCreateFactoryViewModel {
+            MovieDetailViewModel(repository)
+        }
     }
 
     var castAdapter: CastAdapter? = null

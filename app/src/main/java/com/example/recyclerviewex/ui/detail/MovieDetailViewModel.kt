@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.recyclerviewex.data.remote.ServiceProvider
 import com.example.recyclerviewex.data.repository.MovieRepository
 import com.example.recyclerviewex.mapper.mapToMovieDetailUiModel
+import com.example.recyclerviewex.mapper.toGenreEntity
 import com.example.recyclerviewex.mapper.toMovieEntity
+import com.example.recyclerviewex.mapper.toMovieGenreCross
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -69,6 +71,14 @@ class MovieDetailViewModel(private val movieRepository: MovieRepository) : ViewM
 
                 movieData?.let {
                     movieRepository.insertMovie(it.toMovieEntity(System.currentTimeMillis()))
+                    movieData.genres?.let {
+
+                    }
+
+                    movieRepository.insertGenre(
+                        it.genres.toGenreEntity() ?: emptyList(),
+                        it.genres.toMovieGenreCross(it.id ?: 0) ?: emptyList()
+                    )
                 }
 
                 /**

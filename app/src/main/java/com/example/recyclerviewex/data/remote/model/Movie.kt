@@ -1,8 +1,6 @@
-package com.example.recyclerviewex.data.model
+package com.example.recyclerviewex.data.remote.model
 
 import com.google.gson.annotations.SerializedName
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.Serializer
 
 data class Movie(
     val adult: Boolean? = null,

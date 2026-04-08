@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recyclerviewex.data.model.Cast
+import com.example.recyclerviewex.data.remote.model.Cast
 import com.example.recyclerviewex.databinding.ItemCastBinding
 
 class CastAdapter() :

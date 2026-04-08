@@ -1,7 +1,9 @@
 package com.example.recyclerviewex.ui.movies
 
+import com.example.recyclerviewex.data.remote.model.Genre
+
 data class MovieItem(
-    val genreIds: List<Int>? = null,
+    val genres: List<String>? = null,
     val id: Int? = null,
     val originalTitle: String? = null,
     val overview: String? = null,
@@ -9,7 +11,7 @@ data class MovieItem(
     val releaseDate: String? = null,
     val title: String? = null,
     val voteAverage: Double? = null,
-    val voteCount: Int? = null
+    val voteCount: Int? = null,
 )
 
 //feature/move
