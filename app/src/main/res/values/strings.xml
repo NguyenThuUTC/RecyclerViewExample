@@ -7,4 +7,10 @@
     <string name="production_company">Production companies</string>
     <string name="rate_format">%.1f/10</string>
     <string name="view_history">Viewed History</string>
+    <string name="favorite_movies">Favorite Movies</string>
+    <string name="favorite_movie">Favorite movie</string>
+    <string name="remove_favorite_movie">Remove favorite movie</string>
+    <string name="open_favorite_movies">Open favorite movies</string>
+    <string name="favorite_movies_empty">No favorite movies yet.</string>
+    <string name="back">Back</string>
 </resources>

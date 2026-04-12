@@ -15,7 +15,7 @@ Sau khi hoàn thành, ứng dụng cần có:
 
 ---
 
-## 🧩 Task 1. Cập nhật database
+## 🧩 Task 1. Cập nhật database - 15 phút
 - thêm field isFavorite vào MovieEntity
 - tăng version database
 - viết migration để thêm cột isFavorite

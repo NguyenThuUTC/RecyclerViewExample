@@ -8,7 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerviewex.databinding.ItemFeaturedBinding
 import com.example.recyclerviewex.databinding.ItemMovieBinding
 
-class MovieAdapter(val onMovieClick: (MovieItem) -> Unit) : ListAdapter<MovieUIModel, RecyclerView.ViewHolder>(DiffCallback()) {
+class MovieAdapter(
+    private val onMovieClick: (MovieItem) -> Unit,
+    private val onFavoriteClick: ((MovieItem) -> Unit) = {},
+    private val showFavoriteAction: Boolean = true
+) : ListAdapter<MovieUIModel, RecyclerView.ViewHolder>(DiffCallback()) {
 
     //Featured -> movie đầu trong list
     //Movies
@@ -35,7 +39,7 @@ class MovieAdapter(val onMovieClick: (MovieItem) -> Unit) : ListAdapter<MovieUIM
                     parent,
                     false
                 )
-                ItemFeatureViewHolder(binding, onMovieClick)
+                ItemFeatureViewHolder(binding, onMovieClick, onFavoriteClick, showFavoriteAction)
             }
             else -> {
                 val binding = ItemMovieBinding.inflate(
@@ -43,7 +47,7 @@ class MovieAdapter(val onMovieClick: (MovieItem) -> Unit) : ListAdapter<MovieUIM
                     parent,
                     false
                 )
-                 ItemViewHolder(binding, onMovieClick)
+                 ItemViewHolder(binding, onMovieClick, onFavoriteClick, showFavoriteAction)
             }
         }
 

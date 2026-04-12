@@ -5,6 +5,7 @@ import com.example.recyclerviewex.data.remote.model.Genre
 data class MovieItem(
     val genres: List<String>? = null,
     val id: Int? = null,
+    val isFavorite: Boolean = false,
     val originalTitle: String? = null,
     val overview: String? = null,
     val posterPath: String? = null,

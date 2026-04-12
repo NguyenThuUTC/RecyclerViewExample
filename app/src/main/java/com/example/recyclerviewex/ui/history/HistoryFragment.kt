@@ -7,22 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.recyclerviewex.R
 import com.example.recyclerviewex.data.local.database.AppDatabaseProvider
 import com.example.recyclerviewex.data.repository.MovieRepository
 import com.example.recyclerviewex.databinding.FragmentViewedHistoryBinding
 import com.example.recyclerviewex.ui.common.BaseCreateFactoryViewModel
-import com.example.recyclerviewex.ui.detail.MovieDetailViewModel
 import com.example.recyclerviewex.ui.movies.MovieAdapter
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import kotlin.getValue
 
-class HistoryFragment: Fragment() {
+class HistoryFragment : Fragment() {
     var binding: FragmentViewedHistoryBinding? = null
 
     val db by lazy {
@@ -39,7 +34,6 @@ class HistoryFragment: Fragment() {
         }
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,7 +47,6 @@ class HistoryFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-
         observeData()
     }
 
@@ -61,19 +54,14 @@ class HistoryFragment: Fragment() {
         historyViewModel.movies.onEach {
             movieAdapter?.submitList(it)
         }.launchIn(viewLifecycleOwner.lifecycleScope)
-
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            historyViewModel.movies.collectLatest {
-//
-//            }
-//        }
-
     }
 
     var movieAdapter: MovieAdapter? = null
     private fun initViews() {
-        movieAdapter = MovieAdapter(onMovieClick = { movie ->
-        })
+        movieAdapter = MovieAdapter(
+            onMovieClick = { },
+            showFavoriteAction = false
+        )
         binding?.run {
             rcvHistory.adapter = movieAdapter
             rcvHistory.layoutManager = LinearLayoutManager(

@@ -11,7 +11,7 @@ import com.example.recyclerviewex.data.local.entity.MovieGenreCrossRef
     MovieEntity::class,
     GenreEntity::class,
     MovieGenreCrossRef::class
-                     ], version = 3)
+                     ], version = 4)
 abstract class AppDataBase: RoomDatabase() {
     abstract fun movieDao() : MovieDao
 }

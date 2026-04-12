@@ -5,13 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.recyclerviewex.data.repository.MovieRepository
 import com.example.recyclerviewex.data.remote.ServiceProvider
+import com.example.recyclerviewex.mapper.toMovieEntity
 import com.example.recyclerviewex.mapper.toUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class MovieViewModel : ViewModel() {
+class MovieViewModel(
+    private val repository: MovieRepository
+) : ViewModel() {
     private val _movies = MutableLiveData<List<MovieUIModel>?>()
     val movies: LiveData<List<MovieUIModel>?> = _movies
 
@@ -56,5 +60,39 @@ class MovieViewModel : ViewModel() {
                 Log.e("Error", "${e.message}")
             }
         }
+    }
+
+    fun favoriteMovie(movie: MovieItem) {
+        updateFavoriteState(movie.id, true)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.setFavoriteMovie(
+                movie = movie.toMovieEntity(isFavorite = true),
+                isFavorite = true
+            )
+        }
+    }
+
+    private fun updateFavoriteState(movieId: Int?, isFavorite: Boolean) {
+        if (movieId == null) return
+        val updatedMovies = _movies.value?.map { item ->
+            when (item) {
+                is MovieUIModel.Feature -> {
+                    if (item.movie.id == movieId) {
+                        item.copy(movie = item.movie.copy(isFavorite = isFavorite))
+                    } else {
+                        item
+                    }
+                }
+
+                is MovieUIModel.Movie -> {
+                    if (item.movie.id == movieId) {
+                        item.copy(movie = item.movie.copy(isFavorite = isFavorite))
+                    } else {
+                        item
+                    }
+                }
+            }
+        }
+        _movies.postValue(updatedMovies)
     }
 }

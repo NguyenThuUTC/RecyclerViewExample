@@ -11,14 +11,29 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerviewex.R
+import com.example.recyclerviewex.data.local.database.AppDatabaseProvider
+import com.example.recyclerviewex.data.repository.MovieRepository
 import com.example.recyclerviewex.databinding.FragmentMovieBinding
+import com.example.recyclerviewex.ui.common.BaseCreateFactoryViewModel
 
 class MovieFragment : Fragment() {
 
     var binding: FragmentMovieBinding? = null
     var movieAdapter: MovieAdapter? = null
 
-    val movieViewModel: MovieViewModel by viewModels()
+    val db by lazy {
+        AppDatabaseProvider.getInstance(requireContext().applicationContext)
+    }
+
+    private val repository by lazy {
+        MovieRepository(db.movieDao())
+    }
+
+    val movieViewModel: MovieViewModel by viewModels {
+        BaseCreateFactoryViewModel {
+            MovieViewModel(repository)
+        }
+    }
 
     var layoutManager: RecyclerView.LayoutManager? = null
 
@@ -26,7 +41,6 @@ class MovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentMovieBinding.inflate(layoutInflater)
         return binding?.root
     }
@@ -49,10 +63,15 @@ class MovieFragment : Fragment() {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy < 0) return
                 val totalItemCount = layoutManager?.itemCount ?: 0
-                val lastVisibleItem = (layoutManager as? LinearLayoutManager)?.findLastVisibleItemPosition() ?: 0
-                val firstVisibleItem = (layoutManager as? LinearLayoutManager)?.findLastVisibleItemPosition()
+                val lastVisibleItem =
+                    (layoutManager as? LinearLayoutManager)?.findLastVisibleItemPosition() ?: 0
+                val firstVisibleItem =
+                    (layoutManager as? LinearLayoutManager)?.findLastVisibleItemPosition()
 
-                Log.d("addOnScrollListener", "firstVisibleItem ${firstVisibleItem}  lastVisibleItem $lastVisibleItem")
+                Log.d(
+                    "addOnScrollListener",
+                    "firstVisibleItem ${firstVisibleItem}  lastVisibleItem $lastVisibleItem"
+                )
                 if (lastVisibleItem >= totalItemCount - 5) {
                     movieViewModel.loadMovies()
                 }
@@ -61,6 +80,10 @@ class MovieFragment : Fragment() {
 
         btnViewedHistory.setOnClickListener {
             findNavController().navigate(R.id.historyFragment)
+        }
+
+        btnFavoriteMovies.setOnClickListener {
+            findNavController().navigate(R.id.favoriteMovieFragment)
         }
     }
 
@@ -71,15 +94,19 @@ class MovieFragment : Fragment() {
     }
 
     private fun initViews() {
-        movieAdapter = MovieAdapter(onMovieClick = { movie ->
-            // Task 2.1: Navigate sang màn Movie detail với movie id
-            findNavController().navigate(
-                R.id.movieDetailFragment,
-                Bundle().apply {
-                    putInt("movieId", movie.id ?: -1)
-                }
-            )
-        })
+        movieAdapter = MovieAdapter(
+            onMovieClick = { movie ->
+                findNavController().navigate(
+                    R.id.movieDetailFragment,
+                    Bundle().apply {
+                        putInt("movieId", movie.id ?: -1)
+                    }
+                )
+            },
+            onFavoriteClick = { movie ->
+                movieViewModel.favoriteMovie(movie)
+            }
+        )
         binding?.run {
             rcvMovies.adapter = movieAdapter
             layoutManager = LinearLayoutManager(

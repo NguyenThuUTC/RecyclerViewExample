@@ -18,9 +18,12 @@ const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"
 fun Movie.toUi(): MovieItem {
     return MovieItem(
         id = id,
+        originalTitle = originalTitle,
+        releaseDate = releaseDate,
         title = title,
         overview = overview,
-        posterPath = "$IMAGE_BASE_URL$posterPath"
+        posterPath = posterPath.toPosterUrl(),
+        voteAverage = voteAverage
     )
 }
 
@@ -54,10 +57,22 @@ fun mapToMovieDetailUiModel(
 fun MovieDetailResponse.toMovieEntity(viewedAt: Long?) = MovieEntity(
     id = id ?: 0,
     overview = overview,
-    posterPath = "$IMAGE_BASE_URL${posterPath}",
+    posterPath = posterPath.toPosterUrl(),
     originalTitle = title,
     voteAverage = voteAverage,
-    viewedAt = viewedAt
+    viewedAt = viewedAt,
+    releaseDate = releaseDate
+)
+
+fun MovieItem.toMovieEntity(viewedAt: Long? = null, isFavorite: Boolean = this.isFavorite) = MovieEntity(
+    id = id ?: 0,
+    originalTitle = title ?: originalTitle,
+    overview = overview,
+    posterPath = posterPath.toPosterUrl(),
+    voteAverage = voteAverage,
+    viewedAt = viewedAt,
+    releaseDate = releaseDate,
+    isFavorite = isFavorite
 )
 
 fun List<Genre>?.toGenreEntity(): List<GenreEntity>? {
@@ -85,9 +100,12 @@ fun List<MovieWithGenreDetail>?.toMovieUiModel(): List<MovieUIModel>? {
         MovieUIModel.Movie(
             movie = MovieItem(
                 id = movieWithGenre.movie.id,
+                isFavorite = movieWithGenre.movie.isFavorite,
                 title = movieWithGenre.movie.originalTitle,
                 overview = movieWithGenre.movie.overview,
-                posterPath = "$IMAGE_BASE_URL${movieWithGenre.movie.posterPath}",
+                posterPath = movieWithGenre.movie.posterPath.toPosterUrl(),
+                releaseDate = movieWithGenre.movie.releaseDate,
+                voteAverage = movieWithGenre.movie.voteAverage,
                 genres = movieWithGenre.genres.toGenre()
             ),
 
@@ -99,6 +117,11 @@ fun List<GenreEntity>?.toGenre(): List<String>? {
     return this?.map { genreEntity ->
         genreEntity.name ?: ""
     }
+}
+
+private fun String?.toPosterUrl(): String? {
+    if (this.isNullOrBlank()) return null
+    return if (startsWith("http")) this else "$IMAGE_BASE_URL$this"
 }
 
 

@@ -24,5 +24,9 @@
         android:id="@+id/historyFragment"
         android:name="com.example.recyclerviewex.ui.history.HistoryFragment"
         android:label="HistoryFragment" />
+    <fragment
+        android:id="@+id/favoriteMovieFragment"
+        android:name="com.example.recyclerviewex.ui.favorite.FavoriteMovieFragment"
+        android:label="FavoriteMovieFragment" />
 
 </navigation>

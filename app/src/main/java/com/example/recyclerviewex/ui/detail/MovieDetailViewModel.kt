@@ -70,7 +70,7 @@ class MovieDetailViewModel(private val movieRepository: MovieRepository) : ViewM
 
 
                 movieData?.let {
-                    movieRepository.insertMovie(it.toMovieEntity(System.currentTimeMillis()))
+                    movieRepository.saveViewedMovie(it.toMovieEntity(System.currentTimeMillis()))
                     movieData.genres?.let {
 
                     }
