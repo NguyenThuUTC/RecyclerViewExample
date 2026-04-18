@@ -11,9 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerviewex.R
-import com.example.recyclerviewex.data.local.database.AppDatabaseProvider
-import com.example.recyclerviewex.data.repository.MovieRepository
 import com.example.recyclerviewex.databinding.FragmentMovieBinding
+import com.example.recyclerviewex.di.AppContainer
 import com.example.recyclerviewex.ui.common.BaseCreateFactoryViewModel
 
 class MovieFragment : Fragment() {
@@ -21,17 +20,14 @@ class MovieFragment : Fragment() {
     var binding: FragmentMovieBinding? = null
     var movieAdapter: MovieAdapter? = null
 
-    val db by lazy {
-        AppDatabaseProvider.getInstance(requireContext().applicationContext)
-    }
-
-    private val repository by lazy {
-        MovieRepository(db.movieDao())
-    }
+    private val appContainer by lazy { AppContainer.from(requireContext()) }
 
     val movieViewModel: MovieViewModel by viewModels {
         BaseCreateFactoryViewModel {
-            MovieViewModel(repository)
+            MovieViewModel(
+                getPopularMoviesUseCase = appContainer.getPopularMoviesUseCase,
+                setFavoriteMovieUseCase = appContainer.setFavoriteMovieUseCase
+            )
         }
     }
 

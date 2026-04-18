@@ -1,7 +1,5 @@
 package com.example.recyclerviewex.ui.movies
 
-import com.example.recyclerviewex.data.remote.model.Genre
-
 data class MovieItem(
     val genres: List<String>? = null,
     val id: Int? = null,

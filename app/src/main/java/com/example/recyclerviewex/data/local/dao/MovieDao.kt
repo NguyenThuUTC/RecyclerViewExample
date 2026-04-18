@@ -46,6 +46,15 @@ interface MovieDao {
 
     @Query(
         """
+        SELECT id FROM movie
+        WHERE id IN (:movieIds)
+        AND isFavorite = 1
+    """
+    )
+    suspend fun getFavoriteMovieIds(movieIds: List<Int>): List<Int>
+
+    @Query(
+        """
         UPDATE movie
         SET isFavorite = :isFavorite
         WHERE id = :movieId
